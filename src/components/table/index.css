@@ -1,0 +1,8 @@
+.center-text {
+  text-align: center;
+}
+
+.center-btn {
+  display: block !important;
+  margin: 0 auto;
+}
