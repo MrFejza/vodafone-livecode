@@ -1,16 +1,58 @@
+import { useState } from "react";
 import { Button, Modal, Form, Row, Col, InputGroup } from "react-bootstrap";
-
 import { IoMdPersonAdd } from "react-icons/io";
 
 const CreateUser = ({ show, open, close, create, error }) => {
-  const handleSubmit = (event) => {};
+  const [formData, setFormData] = useState({
+    name: "",
+    username: "",
+    email: "",
+    address: {
+      street: "",
+      suite: "",
+      city: "",
+      zipcode: "",
+      geo: {
+        lat: "",
+        lng: "",
+      },
+    },
+    phone: "",
+    website: "",
+  });
 
-  console.log(error);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+      setFormData((prev) => ({
+        ...prev,
+        [parent]: {
+          ...prev[parent],
+          [child]: value,
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await create(formData); 
+      close(); 
+    } catch (err) {
+      console.error("Error creating user:", err);
+    }
+  };
   return (
     <>
       <Button variant="primary" onClick={open}>
-        <IoMdPersonAdd />
+        Shto User  <IoMdPersonAdd />
       </Button>
 
       <Modal show={show} onHide={close}>
@@ -21,75 +63,111 @@ const CreateUser = ({ show, open, close, create, error }) => {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
-              <Form.Group as={Col} md="4" controlId="validationCustom01">
-                <Form.Label>First name</Form.Label>
+              <Form.Group as={Col} md="6" controlId="validationCustom01">
+                <Form.Label>Name</Form.Label>
                 <Form.Control
                   required
                   type="text"
-                  placeholder="First name"
-                  defaultValue="Mark"
+                  placeholder="Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                 />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustom02">
-                <Form.Label>Last name</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Last name"
-                  defaultValue="Otto"
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="4" controlId="validationCustomUsername">
+              <Form.Group as={Col} md="6" controlId="validationCustom02">
                 <Form.Label>Username</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Username"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a username.
-                  </Form.Control.Feedback>
-                </InputGroup>
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col} md="6" controlId="validationCustom03">
-                <Form.Label>City</Form.Label>
-                <Form.Control type="text" placeholder="City" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
-                </Form.Control.Feedback>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
               </Form.Group>
-              <Form.Group as={Col} md="3" controlId="validationCustom04">
-                <Form.Label>State</Form.Label>
-                <Form.Control type="text" placeholder="State" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid state.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="3" controlId="validationCustom05">
-                <Form.Label>Zip</Form.Label>
-                <Form.Control type="text" placeholder="Zip" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid zip.
-                </Form.Control.Feedback>
+              <Form.Group as={Col} md="6" controlId="validationCustom04">
+                <Form.Label>Phone</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                />
               </Form.Group>
             </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} md="6" controlId="validationCustom05">
+                <Form.Label>Street</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Street"
+                  name="address.street"
+                  value={formData.address.street}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom06">
+                <Form.Label>City</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="City"
+                  name="address.city"
+                  value={formData.address.city}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} md="6" controlId="validationCustom07">
+                <Form.Label>Zipcode</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Zipcode"
+                  name="address.zipcode"
+                  value={formData.address.zipcode}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom08">
+                <Form.Label>Website</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Website"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Row>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={close}>
+                Close
+              </Button>
+              <Button variant="primary" type="submit">
+                Create User
+              </Button>
+            </Modal.Footer>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={close}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={close}>
-            Create User
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

@@ -24,18 +24,53 @@ const Page = () => {
     }
   };
 
+
+  
   const createUser = async (data) => {
-    const response = await create(data);
-    if (response?.data.status === 200) {
-      setUsers(response.data);
-    } else {
-      setErrorStatus({ status: true, message: response.data.message });
+    try {
+      const response = await create(data);
+      if (response.status === 201) { 
+        setUsers((prevUsers) => [...prevUsers, response.data]); 
+      } else {
+        setErrorStatus({ status: true, message: "Failed to create user" });
+      }
+    } catch (err) {
+      setErrorStatus({ status: true, message: err.message });
+    }
+  };
+
+  const updateUser = async (updatedUser) => {
+    try {
+      const response = await update(updatedUser); // Call the update service
+      if (response.status === 200) {
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === updatedUser.id ? updatedUser : user
+          )
+        );
+      } else {
+        setErrorStatus({ status: true, message: "Failed to update user" });
+      }
+    } catch (err) {
+      setErrorStatus({ status: true, message: err.message });
+    }
+  };
+  const deleteUser = async (id) => {
+    try {
+      const response = await deleteById(id); 
+      if (response.status === 200) {
+        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id)); 
+      } else {
+        setErrorStatus({ status: true, message: "Failed to delete user" });
+      }
+    } catch (err) {
+      setErrorStatus({ status: true, message: err.message });
     }
   };
 
   return (
     <>
-      <UserTable users={usersDate} create={createUser} error={errorStatus} />
+      <UserTable users={usersDate} create={createUser} error={errorStatus} onUpdateUser={updateUser}  onDeleteUser={deleteUser}/>
     </>
   );
 };

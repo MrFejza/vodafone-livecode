@@ -206,6 +206,24 @@
         "catchPhrase": "Centralized empowering task-force",
         "bs": "target end-to-end models"
       }
+    },
+    {
+      "name": "Ergis",
+      "username": "Qazim",
+      "email": "fejzaergis@gmail.com",
+      "address": {
+        "street": "jnnnn",
+        "suite": "",
+        "city": "ddddd",
+        "zipcode": "1232",
+        "geo": {
+          "lat": "",
+          "lng": ""
+        }
+      },
+      "phone": "0691212123",
+      "website": "dsffd.co",
+      "id": 11
     }
   ]
 }
