@@ -51,7 +51,7 @@ const CreateUser = ({ show, open, close, create, error }) => {
   };
   return (
     <>
-      <Button variant="primary"  className="px-4  py-2 flex my-7 ml-5 " onClick={open}>
+      <Button variant="primary"  className="px-4  py-2 flex my-7  " onClick={open}>
         Shto User <IoMdPersonAdd className="ml-2 mt-1"/>
       </Button>
 

@@ -24,13 +24,11 @@ const Page = () => {
     }
   };
 
-
-  
   const createUser = async (data) => {
     try {
       const response = await create(data);
-      if (response.status === 201) { 
-        setUsers((prevUsers) => [...prevUsers, response.data]); 
+      if (response.status === 201) {
+        setUsers((prevUsers) => [...prevUsers, response.data]);
       } else {
         setErrorStatus({ status: true, message: "Failed to create user" });
       }
@@ -41,7 +39,7 @@ const Page = () => {
 
   const updateUser = async (updatedUser) => {
     try {
-      const response = await update(updatedUser); 
+      const response = await update(updatedUser);
       if (response.status === 200) {
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
@@ -57,9 +55,9 @@ const Page = () => {
   };
   const deleteUser = async (id) => {
     try {
-      const response = await deleteById(id); 
+      const response = await deleteById(id);
       if (response.status === 200) {
-        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id)); 
+        setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
       } else {
         setErrorStatus({ status: true, message: "Failed to delete user" });
       }
@@ -69,9 +67,15 @@ const Page = () => {
   };
 
   return (
-    
-      <UserTable users={usersDate} create={createUser} error={errorStatus} onUpdateUser={updateUser}  onDeleteUser={deleteUser}/>
-    
+    <div className="container mx-auto">
+      <UserTable
+        users={usersDate}
+        create={createUser}
+        error={errorStatus}
+        onUpdateUser={updateUser}
+        onDeleteUser={deleteUser}
+      />
+    </div>
   );
 };
 
