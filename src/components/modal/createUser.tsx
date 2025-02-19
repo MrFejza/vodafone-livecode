@@ -51,12 +51,12 @@ const CreateUser = ({ show, open, close, create, error }) => {
   };
   return (
     <>
-      <Button variant="primary" onClick={open}>
-        Shto User  <IoMdPersonAdd />
+      <Button variant="primary"  className="px-4  py-2 flex my-7 ml-5 " onClick={open}>
+        Shto User <IoMdPersonAdd className="ml-2 mt-1"/>
       </Button>
 
       <Modal show={show} onHide={close}>
-        <Modal.Header closeButton>
+      <Modal.Header closeButton>
           <Modal.Title>Create User</Modal.Title>
           {error.status && <p>Ka error</p>}
         </Modal.Header>

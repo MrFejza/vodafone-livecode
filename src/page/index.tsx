@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import UserTable from "../table";
-import { users } from "../../../data/db.json";
-import { create, get, update, deleteById, getById } from "../../services";
+import UserTable from "../components/table";
+import { users } from "../../data/db.json";
+import { create, get, update, deleteById, getById } from "../services";
 
 const Page = () => {
   const [usersDate, setUsers] = useState(users);
@@ -41,7 +41,7 @@ const Page = () => {
 
   const updateUser = async (updatedUser) => {
     try {
-      const response = await update(updatedUser); // Call the update service
+      const response = await update(updatedUser); 
       if (response.status === 200) {
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
@@ -69,9 +69,9 @@ const Page = () => {
   };
 
   return (
-    <>
+    
       <UserTable users={usersDate} create={createUser} error={errorStatus} onUpdateUser={updateUser}  onDeleteUser={deleteUser}/>
-    </>
+    
   );
 };
 

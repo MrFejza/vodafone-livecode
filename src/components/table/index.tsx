@@ -8,6 +8,7 @@ import { BiShow } from "react-icons/bi";
 import { CiEdit } from "react-icons/ci";
 import { FaTrash } from "react-icons/fa";
 import "./index.css";
+import TestModal from "../modal/TestModal";
 
 const UserTable = ({ users, create, error, onUpdateUser, onDeleteUser }) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -45,13 +46,17 @@ const UserTable = ({ users, create, error, onUpdateUser, onDeleteUser }) => {
   return (
     <>
       {/* Create User Modal */}
-      <CreateUser
+      <div>
+        <CreateUser
         show={showCreateModal}
         open={handleShowCreateModal}
         close={handleCloseCreateModal}
         create={create}
         error={error}
+
       />
+      </div>
+
 
       {/* View User Modal */}
       <ViewUserModal
@@ -130,6 +135,7 @@ const UserTable = ({ users, create, error, onUpdateUser, onDeleteUser }) => {
           ))}
         </tbody>
       </Table>
+      <TestModal/>
     </>
   );
 };
